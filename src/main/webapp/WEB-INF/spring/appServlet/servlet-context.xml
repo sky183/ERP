@@ -18,8 +18,7 @@
 
 	<!--    뷰 파일을 스캔하여 보여주는 역할 http://blog.naver.com/PostView.nhn?blogId=kimnx9006&logNo=220446806644 참고-->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-		  p:prefix="/views"
-		  p:suffix=".jsp"/>
-
+		  p:prefix="/WEB-INF/views/"
+		  p:suffix=".jsp" />
 
 </beans>
