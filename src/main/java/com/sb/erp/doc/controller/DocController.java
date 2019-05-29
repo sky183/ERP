@@ -29,6 +29,8 @@ public class DocController {
 
     /*doc 메일에서 타고 왔을때 페이지 이동시*/
     @RequestMapping(value = "/doc", method = RequestMethod.GET)
+
+
     public ModelAndView mailPage(@RequestParam(value = "page", required = false) String page) {
         ModelAndView modelAndView = new ModelAndView("doc");
 
@@ -137,11 +139,7 @@ public class DocController {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        if (finish == 0) {
-            modelAndView.setViewName("doc/mySignBefore");
-        } else {
-            modelAndView.setViewName("doc/mySignAfter");
-        }
+        modelAndView.setViewName("doc/" + page);
 
         List<DocVO> docVOList = new ArrayList<DocVO>();
         int docCount = 0;
@@ -297,7 +295,7 @@ public class DocController {
     // 문서 삭제(결재 취소)
     @RequestMapping(value = "/doc/deleteDoc", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteDoc(@RequestParam("docArray ") List<Object> docArray) {
+    public String deleteDoc(@RequestBody List<Object> docArray) {
 
         try {
             service.deleteDoc(docArray);

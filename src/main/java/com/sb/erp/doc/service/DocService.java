@@ -91,6 +91,7 @@ public class DocService {
 
         return memberVO;
     }
+
     //    회원번호로 조회
     @Transactional
     public MemberVO selectByMemNum(int memNum) {
@@ -134,7 +135,7 @@ public class DocService {
         dao.updateSignLevel();
     }
 
-    //    문서 삭제(결재 취소)
+    //  문서 삭제(결재 취소)
     @Transactional
     public void deleteDoc(List<Object> docArray) {
         dao = sqlSessionTemplate.getMapper(DocDao.class);

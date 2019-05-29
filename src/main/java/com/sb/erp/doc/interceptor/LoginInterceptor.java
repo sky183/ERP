@@ -24,7 +24,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        try {
+/*        try {
 
             String page = request.getParameter("page");
 
@@ -39,7 +39,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         response.sendRedirect(request.getContextPath() + "/login");
 

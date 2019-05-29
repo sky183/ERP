@@ -43,12 +43,12 @@
         </div>
         <table>
             <tr>
-                <td>오늘의 방문자수</td>
-                <td id="todayCount">${todayCount}건</td>
+                <td>총 방문자수</td>
+                <td id="totalCount">${totalCount}건</td>
             </tr>
             <tr>
-                <td>어제의 방문자수</td>
-                <td id="totalCount">${totalCount}건</td>
+                <td>오늘의 방문자수</td>
+                <td id="todayCount">${todayCount}건</td>
             </tr>
         </table>
     </div>

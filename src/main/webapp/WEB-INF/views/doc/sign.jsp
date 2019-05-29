@@ -109,8 +109,6 @@
 
             var startDate = new Date($('#startDate').val());
             var endDate = new Date($('#endDate').val());
-            alert(startDate)
-            alert(endDate)
             $('#totalDate').val((endDate-startDate)/day +1);
         });
 
