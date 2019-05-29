@@ -1,0 +1,350 @@
+@charset "UTF-8";
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body{
+    padding:0px;
+    margin:0px;
+    min-width: 1000px;
+    font-family: "돋움", Dotum, "굴림", Gulim;
+}
+a {
+    color: #333 !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: black;
+}
+a:hover {
+    text-decoration: none;
+}
+select, button{
+    cursor: pointer;
+}
+select {
+    font-size: 12px;
+    color: #666;
+    padding-bottom: 1px;
+}
+a, li, div{
+    /*클릭, 드래그 등을 막는다.*/
+    user-select: none;
+}
+li {
+    list-style: none;
+    font-size: 13px;
+}
+.inputText {
+    font-size: 12px;
+    color: #666;
+    border: 1px solid #ccc;
+    padding: 0px 5px;
+    font-family: Arial;
+    min-height: 20px;
+    vertical-align: middle;
+}
+/* 테두리 겹치는 것 없애기 */
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+/* 내용물을 좌우로 균일하게 정렬 */
+.space{
+    justify-content:space-between;
+    flex-wrap:wrap;
+    display:flex;
+}
+
+/*login*/
+#loginWrapper {
+    height: 100%;
+    background-color: #282828;
+    padding-top: 10%;
+}
+#loginBox {
+    width: 600px;
+    margin: 0 auto;
+}
+#loginBox #topBox {
+    margin-bottom: 30px !important;
+}
+#loginBox #topBox, #loginBox .checkWrap{
+    width: 380px;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+}
+#loginBox #topBox {
+    font-size: 30px;
+    font-weight: bold;
+}
+#loginBox .checkWrap *{
+    vertical-align: middle;
+    font-size: 12px;
+}
+#loginBox .checkWrap{
+    text-align: left !important;
+}
+#loginBox input[type="text"], #loginBox input[type="password"] {
+    display: block;
+    width: 380px;
+    margin: 15px auto;
+    border-radius: 0;
+    border: none;
+    height: 41px;
+    padding: 6px 12px;
+    font-size: 14px;
+
+}
+#loginBox button {
+    display: block;
+    width: 380px;
+    margin: 15px auto;
+    border-radius: 0;
+    border: none;
+    height: 41px;
+    background-color: #ffc828 !important;
+    color: #282828!important;
+    font-size: 15px;
+    font-weight: bold;
+}
+.error {
+    margin-left: 20px;
+    color: #c8c8c8;
+}
+
+/*docMenu*/
+.docMenuNavi {
+    width: 100%;
+    background-color: #333;
+}
+.docMenuNavi li{
+    display: inline-block;
+}
+.docMenuNavi * {
+    color: #aaa !important;
+}
+.navTop:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.navTop {
+    height: 37px;
+    line-height: 30px;
+}
+.navTop li{
+    height: 20px;
+    padding: 5px;
+}
+.navTop li a, .navTop li {
+    font-size: 12px;
+}
+.navTop li:first-child {
+    float: left;
+    font-size: 20px;
+}
+.navTop li:nth-child(2), .navTop li:nth-child(3) {
+    float: right;
+    margin-right: 20px;
+}
+.navBottom {
+    padding-top: 15px;
+    border-top: 1px solid #444;
+}
+.navBottom li.left{
+    width: 205px;
+}
+.navBottom li:not(:first-child) {
+    padding: 8px 15px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    background: linear-gradient( to Bottom, #9FA3A4, #333, #333, #333);
+    width: 98px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+.navBottom .active {
+    background: linear-gradient( to Bottom, #E5E8EA, #2E9AFE, #2E9AFE, #2E9AFE) !important;
+}
+.navBottom .active a {
+    color: #FAFBFE !important;
+}
+.navBottom li:not(:first-child):hover {
+    background: linear-gradient( to Bottom, #E5E8EA, #2E9AFE, #2E9AFE, #2E9AFE);
+}
+.navBottom li:not(:first-child):hover a {
+    color: #FAFBFE !important;
+}
+#wrap {
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
+#docLeftWrap {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+}
+
+.menuWrap {
+    width: 200px;
+    border: 5px solid #8FD1F3;
+    padding: 5px;
+}
+.menuWrap ul {
+    border-bottom: 1px solid #8FD1F3;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.menuWrap ul li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.menuWrap ul * {
+    font-size: 12px;
+}
+.menuWrap ul li:first-child {
+    background: url(../img/left_bul01.gif) left 3px no-repeat;
+    padding-left: 16px;
+}
+.menuWrap ul li:first-child .menuWrap ul li:first-child *{
+    font-weight: bold;
+}
+.menuWrap ul li:not(:first-child) {
+    background: url(../img/left_bul02.gif) 4px no-repeat;
+    padding-left: 17px;
+}
+#docRightWrap {
+    vertical-align: top;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+/*docMain*/
+.signWrap {
+    display: inline-block;
+    margin-right: 20px;
+}
+.head {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.signWrap table * {
+    font-size: 12px;
+    border: 1px solid #d5d5d5;
+}
+.signWrap table td {
+    width: 150px;
+}
+.signWrap table td {
+    padding: 5px 5px;
+}
+.signWrap table td:first-child {
+    text-align: center;
+    background-color: #ededed;
+}
+.signWrap table td:not(:first-child) {
+    text-align: left;
+}
+
+/*공통*/
+#title {
+    width: 750px;
+    border-bottom: 3px solid #9bc5ee;
+}
+#title h3 {
+    line-height: 25px;
+    font-size: 16px;
+    padding: 0px 0 0px 18px;
+    color: #333;
+    background: url(../img/bul_h3.gif) left 5px no-repeat;
+}
+
+/*sign*/
+
+.selWrap {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    float: left;
+    width: 100%;
+    min-height: 20px;
+    padding: 14px 10px;
+    border: 1px solid #c5d1e5;
+}
+.selWrap *, #formTable * {
+    font-size: 12px;
+    color: #666;
+    font-family: Arial;
+}
+.selWrap {
+    background: linear-gradient( to Bottom, #FBFCFC, #DFF1F6, #DFF1F6, #DFF1F6);
+}
+.selWrap label {
+
+}
+#sel {
+
+}
+.signMem, #insertSign, #docSign{
+    float: right;
+}
+#insertSign {
+    margin-left: 6px;
+}
+#formTable {
+    width: 750px;
+}
+#formTable span {
+    color: blue;
+}
+#formTable, #formTable td, #formTable th, #formTable tr{
+    border: 1px solid #d5d5d5;
+    padding: 4px;
+}
+#formTable th {
+    width: 112px;
+    background-color: #ededed;
+    font-weight: normal;
+    text-align: center;
+}
+#formTable tr:first-child td {
+    width: 262px;
+}
+#startDate, #endDate {
+    width: 122px;
+}
+#totalDate {
+    width: 25px;
+}
+.signMemWrap {
+    height: 94px;
+    padding: 0 !important;
+    overflow: hidden;
+
+}
+.signMemWrap input[type="text"] {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin-top: -14px;
+    user-select: none;
+    cursor: pointer;
+    text-align: center;
+}
+.signMemWrap input[type="text"]:focus {
+    outline: none;
+    cursor: pointer;
+}
+#docTitle {
+    width: 477px;
+}
+.formWrite {
+    margin-bottom: 20px;
+}

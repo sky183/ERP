@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+        namespace="com.sb.erp.doc.dao.DocDao">
+
+    <!--    회원 정보 가져오기(로그인)-->
+    <select id="selectById" resultType="com.sb.erp.doc.model.MemberVO" parameterType="String">
+        select memNum, id, pw, name, title, titleNum, email from member where id = #{param1};
+    </select>
+
+    <!--    내가 결재할 차례 문서 조회 - selectMySign-->
+    <!--    finish = 1 로 하면 결재 완료된 문서 조회-->
+    <select id="selectMySign" resultType="com.sb.erp.doc.model.DocVO" parameterType="int">
+
+        SELECT DISTINCT
+        a.docNum AS docNum, a.title AS title, a.level AS level, c.name AS name, a.startDate startDate
+        FROM
+        doc a,
+        sign b,
+        member c
+        WHERE
+        a.docNum = b.docNum
+        AND a.memNum = c.memNum
+        <choose>
+
+            <when test="finish != 1">
+
+                AND a.level <![CDATA[<=]]> 1
+                AND a.level = b.level
+
+            </when>
+
+            <otherwise>
+
+                AND a.level <![CDATA[>]]> 1
+
+            </otherwise>
+
+        </choose>
+
+        AND b.signMem = #{param1}
+        ;
+
+    </select>
+
+    <!--    내가 올린 문서 중 결재 완료 안된 문서 조회 - selectMyDoc-->
+    <!--    finish = 1 로 하면 결재 완료된 문서 조회-->
+    <select id="selectMyDoc" resultType="com.sb.erp.doc.model.DocVO">
+
+        SELECT DISTINCT
+        a.docNum AS docNum, a.title AS title, a.level AS level, c.name AS name, a.startDate startDate
+        FROM
+        doc a,
+        sign b,
+        member c
+        WHERE
+        a.docNum = b.docNum
+        AND a.memNum = c.memNum
+
+        <choose>
+
+            <when test="finish != 1">
+
+                AND a.level <![CDATA[<=]]> 1
+                AND a.memNum = #{param1}
+
+            </when>
+
+            <otherwise>
+
+                AND a.level <![CDATA[>]]> 1
+                AND a.memNum = #{param1}
+
+            </otherwise>
+
+        </choose>
+
+        ;
+
+    </select>
+
+    <!--    문서번호로 결재 문서 상세 조회 - selectDocDetail-->
+    <select id="selectDocDetail" resultType="com.sb.erp.doc.model.DocVO" parameterType="int">
+
+    SELECT
+        MAX(docNum) AS docNum,
+        MAX(name) AS name,
+        MAX(memNum) AS memNum,
+        MAX(title) AS title,
+        MAX(content) AS content,
+        MAX(selection) AS selection,
+        MAX(startDate) AS startDate,
+        MAX(endDate) AS endDate,
+        MAX(sign1) AS sign1,
+        MAX(sign2) AS sign2,
+        MAX(signMem1) AS signMem1,
+        MAX(signMem2) AS signMem2,
+        MAX(level) AS level
+    FROM
+        (SELECT
+            0 AS docNum,
+                NULL AS name,
+                0 AS memNum,
+                NULL AS title,
+                NULL AS content,
+                NULL AS selection,
+                0 AS startDate,
+                0 AS endDate,
+                d.name AS sign1,
+                NULL AS sign2,
+                b.signMem AS signMem1,
+                NULL AS signMem2,
+                0 AS level
+        FROM
+            doc a, sign b, member c, member d
+        WHERE
+            a.docNum = b.docNum
+                AND a.memNum = c.memNum
+                AND b.signMem = d.memNum
+                AND b.level = 0
+                AND a.docNum = #{param1}
+        UNION ALL
+        SELECT
+            a.docNum AS docNum,
+                c.name AS name,
+                a.memNum AS memNum,
+                a.title AS title,
+                a.content AS content,
+                a.selection AS selection,
+                DATE(a.startDate) AS startDate,
+                DATE(a.endDate) AS endDate,
+                NULL AS sign1,
+                d.name AS sign2,
+                NULL AS signMem1,
+                b.signMem AS signMem2,
+                a.level AS level
+        FROM
+            doc a, sign b, member c, member d
+        WHERE
+            a.docNum = b.docNum
+                AND a.memNum = c.memNum
+                AND b.signMem = d.memNum
+                AND b.level = 1
+                AND a.docNum = #{param1}) R;
+        </select>
+
+
+    <select id="selectAllMember" resultType="com.sb.erp.doc.model.MemberVO">
+        select * from member order by titleNum;
+    </select>
+
+    <select id="selectMember" parameterType="String" resultType="com.sb.erp.doc.model.MemberVO">
+        select * from member where name = #{param1};
+    </select>
+
+    <select id="selectByMemNum" parameterType="int" resultType="com.sb.erp.doc.model.MemberVO">
+        select * from member where memNum = #{param1};
+    </select>
+
+    <!--    문서 등록 - 기안자가 1명일 경우에는 level을 1로 등록한다. signMem의 레벨이 1 이상이 안되면 자바 코드에서 사전에 등록 거부할것
+        insertDoc-->
+    <insert id="insertDoc" parameterType="com.sb.erp.doc.model.DocVO" useGeneratedKeys="true" keyProperty="docNum">
+        <choose>
+
+            <when test="signMem2 != 0">
+
+                insert into doc
+                (memNum, title, content, selection, startDate, endDate, level)
+                values (#{memNum}, #{title}, #{content}, #{selection}, #{startDate}, #{endDate}, 0);
+            </when>
+
+            <otherwise>
+                insert into doc
+                (memNum, title, content, selection, startDate, endDate, level)
+                values (#{memNum}, #{title}, #{content}, #{selection}, #{startDate},
+                #{endDate}, 1);
+
+            </otherwise>
+
+        </choose>
+
+
+    </insert>
+
+    <!--    결재자 등록 - 기안자가 1명일 경우에는 level을 1만 등록한다. - 없는 문서 번호일 경우 익셉션을 발생시키니 꼭 try catch문을 적용하자
+        insertSign-->
+    <insert id="insertSign" parameterType="com.sb.erp.doc.model.DocVO">
+
+        <choose>
+
+            <when test="signMem2 != 0">
+
+                insert into sign (docNum, signMem, level) select #{docNum}, #{signMem1}, 0 from dual where not exists
+                (select * from sign where docNum = #{docNum} and (level = 0 or signMem = #{signMem1}));
+                insert into sign (docNum, signMem, level) select #{docNum}, #{signMem2}, 1 from dual where not exists
+                (select * from sign where docNum = #{docNum} and (level = 1 or signMem = #{signMem2}));
+
+            </when>
+
+            <otherwise>
+
+                insert into sign (docNum, signMem, level) select #{docNum}, #{signMem1}, 1 from dual where not exists
+                (select * from sign where docNum = #{docNum} and (level = 1 or signMem = #{signMem1}));
+
+            </otherwise>
+
+        </choose>
+
+    </insert>
+
+
+    <!--    문서 level 업데이트 - updateLevel-->
+    <update id="updateLevel">
+        UPDATE doc SET `level` = `level` + 1 WHERE `level` <![CDATA[<=]]> 1 AND
+        <foreach collection="docArray" item="docNum" open="(" close=")" separator=" OR ">
+            `docNum` = '${docNum}'
+        </foreach>
+        ;
+    </update>
+
+    <!--    결재자가 1명일 경우 기존 결재자를 level 1로 올림 - updateSignLevel-->
+    <update id="updateSignLevel">
+    UPDATE sign
+    SET
+        level = 1
+    WHERE
+        docNum = 7 AND level = 0
+            AND NOT EXISTS( SELECT
+                *
+            FROM
+                (SELECT
+                    *
+                FROM
+                    sign
+                WHERE
+                    level = 1) a);
+
+    </update>
+
+    <!--    문서 삭제(결재 취소) - deleteDoc-->
+    <delete id="deleteDoc">
+        DELETE FROM `doc`
+        WHERE
+        <foreach collection="docArray" item="docNum" open="(" close=")" separator=" OR ">
+            `docNum` = '${docNum}'
+        </foreach>
+        ;
+    </delete>
+
+    <!--    회원 탈퇴(모든 결재 및 문서 삭제) - deleteMember-->
+    <delete id="deleteMember">
+    DELETE FROM member
+    WHERE memNum = #{param1};
+    </delete>
+
+    <!--    결재자 삭제 - deleteSignMem-->
+    <delete id="deleteSignMem">
+    DELETE FROM sign
+    WHERE docNum = #{param1} AND signMem = #{param2};
+    </delete>
+
+</mapper>
