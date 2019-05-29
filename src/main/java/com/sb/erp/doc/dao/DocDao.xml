@@ -4,6 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
         namespace="com.sb.erp.doc.dao.DocDao">
+
+    <!-- 총 방문자수 -->
+    <select id="visitCountTotal" resultType="int">
+		select
+		ifnull(sum(visitCount),0) from visitguest
+	</select>
+
+    <!-- 오늘의 방문자수 -->
+    <select id="visitCountPre" resultType="int">
+		SELECT
+		ifnull(sum(visitcount),0) FROM visitguest WHERE date(visitDate) =
+		curDate() - interval #{interval} day
+	</select>
         
     <insert id="visitToday">
 		insert into VisitGuest value (0, DATE_FORMAT(now(),

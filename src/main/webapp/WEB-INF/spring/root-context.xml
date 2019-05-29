@@ -95,6 +95,8 @@
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/img/**" />
 			<bean class="com.sb.erp.doc.interceptor.VisitCountInterceptor" />
 		</mvc:interceptor>
 

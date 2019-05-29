@@ -73,12 +73,16 @@ public class DocController {
         int mySignAfterCount = 0;
         int signBeforeCount = 0;
         int signAfterCount = 0;
+        int todayCount = 0;
+        int totalCount = 0;
 
         try {
             mySignBefore = service.selectMySign(memNum, 0);
             mySignAfter = service.selectMySign(memNum, 1);
             signBefore = service.selectMyDoc(memNum, 0);
             signAfter = service.selectMyDoc(memNum, 1);
+            todayCount = service.visitCountTotal();
+            totalCount = service.visitCountPre(0);
             mySignBeforeCount = mySignBefore.size();
             mySignAfterCount = mySignAfter.size();
             signBeforeCount = signBefore.size();
@@ -91,6 +95,8 @@ public class DocController {
         modelAndView.addObject("mySignAfterCount", mySignAfterCount);
         modelAndView.addObject("signBeforeCount", signBeforeCount);
         modelAndView.addObject("signAfterCount", signAfterCount);
+        modelAndView.addObject("todayCount", todayCount);
+        modelAndView.addObject("totalCount", totalCount);
 
         return modelAndView;
 

@@ -19,6 +19,27 @@ public class DocService {
 
     private DocDao dao;
 
+    // 총 방문자수
+    @Transactional
+    public int visitCountTotal() {
+        dao = sqlSessionTemplate.getMapper(DocDao.class);
+
+        int visitCountTotal = dao.visitCountTotal();
+
+        return visitCountTotal;
+
+    }
+    // 오늘의 방문자수
+    @Transactional
+    public int visitCountPre(int interval) {
+        dao = sqlSessionTemplate.getMapper(DocDao.class);
+
+        int visitCount = dao.visitCountPre(interval);
+
+        return visitCount;
+
+    }
+
     // 내가 결재할 차례 문서 리스트 조회
     @Transactional
     public ArrayList<DocVO> selectMySign(int memNum, int finish) {

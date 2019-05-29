@@ -11,6 +11,11 @@ import java.util.List;
 public interface DocDao {
 
 	//	오늘의 방문자수
+	int visitCountTotal();
+
+	int visitCountPre(int interval);
+
+	//	오늘의 방문자수
 	public int visitToday();
 	
 	public int visitCount();
