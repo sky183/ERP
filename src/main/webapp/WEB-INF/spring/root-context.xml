@@ -86,10 +86,16 @@
 
 	<!--인터셉터-->
 	<mvc:interceptors>
+	
 		<mvc:interceptor>
-			<mvc:mapping path="/*" />
+			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/login*" />
 			<bean class="com.sb.erp.doc.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.sb.erp.doc.interceptor.VisitCountInterceptor" />
 		</mvc:interceptor>
 
 	</mvc:interceptors>
