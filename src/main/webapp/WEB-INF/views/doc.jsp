@@ -99,7 +99,7 @@
     </script>
 </head>
 <body>
-<%@ include file="doc/include/docMenu.jsp" %>
+<%@ include file="include/menu.jsp" %>
 <div id="wrap">
     <div id="docLeftWrap">
         <div class="menuWrap">
@@ -127,6 +127,9 @@
 </html>
 <script>
     $(document).ready(function () {
+
+        $('.doc').addClass('active');
+
 
         var memNum = ${memberVO.memNum};
 

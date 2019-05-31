@@ -25,7 +25,7 @@ public class MailService {
         try {
             message1.setSubject(memberVO.getName() +"님! "+ myMem.getName() + " 님의 상신 문서가 도착하였습니다.", "utf-8");
             String htmlStr =
-                    "<a href=\"http://localhost/ERP/login?page=sign&memNum="+ memNum +"\">사이트로 이동하시려면 클릭하세요</a>";
+                    "<a href=\"http://localhost/ERP/login?page=signBefore&memNum="+ memNum +"\">사이트로 이동하시려면 클릭하세요</a>";
 
             message1.setText(htmlStr, "utf-8", "html");
 

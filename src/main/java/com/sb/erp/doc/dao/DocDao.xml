@@ -17,12 +17,14 @@
 		ifnull(sum(visitcount),0) FROM visitguest WHERE date(visitDate) =
 		curDate() - interval #{interval} day
 	</select>
-        
+
+<!--    오늘 날짜 카운트 등록-->
     <insert id="visitToday">
 		insert into VisitGuest value (0, DATE_FORMAT(now(),
 		'%Y-%m-%d %H:00:00'));
 	</insert>
 
+<!--    방문자수 카운트-->
 	<update id="visitCount">
 		update VisitGuest set visitCount =
 		visitCount + 1
@@ -59,7 +61,7 @@
 
             <otherwise>
 
-                AND a.level <![CDATA[>]]> 1
+                AND a.level > b.level
 
             </otherwise>
 
@@ -89,19 +91,17 @@
             <when test="finish != 1">
 
                 AND a.level <![CDATA[<=]]> 1
-                AND a.memNum = #{param1}
 
             </when>
 
             <otherwise>
 
                 AND a.level <![CDATA[>]]> 1
-                AND a.memNum = #{param1}
 
             </otherwise>
 
         </choose>
-
+        AND a.memNum = #{param1}
         ;
 
     </select>

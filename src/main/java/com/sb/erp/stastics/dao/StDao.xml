@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+        namespace="com.sb.erp.stastics.dao.StDao">
+
+	<!-- 맵 객체를 생성해준다. column에서 반환된 값을 property에 지정한 key로 생성하여 javaType에 지정된
+    값으로 할당한다. -->
+	<resultMap id="getFifthChart" type="java.util.Map">
+		<result column="visitDate" property="visitDate"
+				javaType="java.lang.String" />
+		<result column="visitCount" property="visitCount"
+				javaType="java.lang.Integer" />
+	</resultMap>
+
+    <!-- 총 방문자수 -->
+    <select id="visitCountTotal" resultType="int">
+		select
+		ifnull(sum(visitCount),0) from visitguest
+	</select>
+
+    <!-- 오늘의 방문자수 -->
+    <select id="visitCountPre" resultType="int">
+		SELECT
+		ifnull(sum(visitcount),0) FROM visitguest WHERE date(visitDate) =
+		curDate() - interval #{interval} day
+	</select>
+
+	<!-- // 최근 15일 통계를 불러온다. -->
+	<select id="getFifthChart" resultMap="getFifthChart">
+		select
+		date(visitDate) visitDate,
+		sum(visitCount) visitCount
+		from
+		VisitGuest
+		where date(visitDate) <![CDATA[<=]]>
+		date(#{param1})
+		and visitDate <![CDATA[>=]]>
+		date(#{param1} - interval 15 day)
+		group by date(visitDate);
+	</select>
+
+</mapper>

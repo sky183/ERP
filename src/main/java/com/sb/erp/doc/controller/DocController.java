@@ -29,8 +29,6 @@ public class DocController {
 
     /*doc 메일에서 타고 왔을때 페이지 이동시*/
     @RequestMapping(value = "/doc", method = RequestMethod.GET)
-
-
     public ModelAndView mailPage(@RequestParam(value = "page", required = false) String page) {
         ModelAndView modelAndView = new ModelAndView("doc");
 

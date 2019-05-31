@@ -184,7 +184,7 @@ table {
     margin-bottom: 50px;
 }
 
-#docLeftWrap {
+#docLeftWrap, #stLeftWrap {
     padding-left: 10px;
     padding-right: 10px;
     display: inline-block;
@@ -219,10 +219,11 @@ table {
     background: url(../img/left_bul02.gif) 4px no-repeat;
     padding-left: 17px;
 }
-#docRightWrap {
+#docRightWrap, #stRightWrap {
     vertical-align: top;
     margin-left: 10px;
     display: inline-block;
+    width: 750px;
 }
 
 /*docMain*/
@@ -317,6 +318,9 @@ table {
 #formTable tr:first-child td {
     width: 262px;
 }
+#formTable input[type="checkbox"] {
+    cursor: pointer;
+}
 #startDate, #endDate {
     width: 122px;
 }
@@ -347,4 +351,11 @@ table {
 }
 .formWrite {
     margin-bottom: 20px;
+}
+
+/*stastics*/
+#chart {
+    margin-top: 10px;
+    height: 400px;
+    border: 1px solid #ddd;
 }

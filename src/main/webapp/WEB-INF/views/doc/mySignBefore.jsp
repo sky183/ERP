@@ -79,42 +79,46 @@
         //선택한 문서를 결재처리
         $('#docSign').off('click').on('click', function () {
 
-            //선택한 항목의 배열의 갯수
+            var bool = confirm('정말 삭제하시겠습니까?');
 
-            var docLength = $("input[name='docNum']:checked").length;
+            if (bool) {
+
+                //선택한 항목의 배열의 갯수
+                var docLength = $("input[name='docNum']:checked").length;
 
 
-            if (docLength > 0) {
-                // 문서번호를 담을 배열
-                var docArray = new Array(docLength);
+                if (docLength > 0) {
+                    // 문서번호를 담을 배열
+                    var docArray = new Array(docLength);
 
-                for (var i = 0; i < docLength; i++) {
-                    // 문서 번호를 담는다.
-                    docArray[i] = $("input[name='docNum']:checked")[i].value;
-                }
-
-                // 결재
-                $.ajax({
-                    url: '<%=request.getContextPath()%>/doc/deleteDoc',
-                    method: 'POST',
-                    type: 'json',
-                    data: JSON.stringify(docArray),
-                    contentType: "application/json",
-                    error: function (error) {
-                        alert('Error!');
-                    },
-                    success: function (data) {
-                        if (data == '삭제 완료!') {
-                            alert(data);
-                            location.href = '<%=request.getContextPath()%>/doc';
-                        } else {
-                            alert(data);
-                        }
+                    for (var i = 0; i < docLength; i++) {
+                        // 문서 번호를 담는다.
+                        docArray[i] = $("input[name='docNum']:checked")[i].value;
                     }
-                });
 
-            } else {
-                alert("선택된 문서가 없습니다.");
+                    // 결재
+                    $.ajax({
+                        url: '<%=request.getContextPath()%>/doc/deleteDoc',
+                        method: 'POST',
+                        type: 'json',
+                        data: JSON.stringify(docArray),
+                        contentType: "application/json",
+                        error: function (error) {
+                            alert('Error!');
+                        },
+                        success: function (data) {
+                            if (data == '삭제 완료!') {
+                                alert(data);
+                                location.href = '<%=request.getContextPath()%>/doc';
+                            } else {
+                                alert(data);
+                            }
+                        }
+                    });
+
+                } else {
+                    alert("선택된 문서가 없습니다.");
+                }
             }
         });
 
