@@ -23,30 +23,30 @@ public class HomeController {
         return "index";
     }
 
-    /*모든 페이지 이동시*/
-    @RequestMapping(value = "/{page}", method = RequestMethod.GET)
-    public String page(@PathVariable("page") String page) {
-        return page;
-    }
+            /*모든 페이지 이동시*/
+            @RequestMapping(value = "/{page}", method = RequestMethod.GET)
+            public String page(@PathVariable("page") String page) {
+                return page;
+            }
 
-    /*로그인 페이지*/
-    @RequestMapping(value = "/login", method = RequestMethod.GET) // url 주소
-    // 쿠키 값 저장
-    public ModelAndView getLoginForm(@CookieValue(value = "idcookie", required = false) String rememberId,
-                                     @RequestParam(value = "page", required = false) String page,
-                                     @RequestParam(value = "memNum", required = false) String memNum,
-                                     HttpSession session) {
-        // ModelAndView 객체 생성
-        ModelAndView modelAndView = new ModelAndView();
+            /*로그인 페이지*/
+            @RequestMapping(value = "/login", method = RequestMethod.GET) // url 주소
+            // 쿠키 값 저장
+            public ModelAndView getLoginForm(@CookieValue(value = "idcookie", required = false) String rememberId,
+                    @RequestParam(value = "page", required = false) String page,
+                    @RequestParam(value = "memNum", required = false) String memNum,
+                    HttpSession session) {
+                // ModelAndView 객체 생성
+                ModelAndView modelAndView = new ModelAndView();
 
-        MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
+                MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 
-        // 세션에 저장된 회원번호가 메일에서 보내준 회원번호와 같으면 바로 doc 페이지로 보내준다.
-        if (session != null && memberVO != null && memNum != null && Integer.parseInt(memNum) == memberVO.getMemNum()) {
+                // 세션에 저장된 회원번호가 메일에서 보내준 회원번호와 같으면 바로 doc 페이지로 보내준다.
+                if (session != null && memberVO != null && memNum != null && Integer.parseInt(memNum) == memberVO.getMemNum()) {
 
-            modelAndView.setViewName("redirect:/doc?page=" + page);
+                    modelAndView.setViewName("redirect:/doc?page=" + page);
 
-        } else {
+                } else {
 
             //기존 세션 종료
             session.invalidate();
