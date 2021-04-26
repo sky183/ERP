@@ -179,7 +179,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.6</version>
+			<version>2.7</version>
 		</dependency>
 		<!--Java에서 JSON사용1 https://yookeun.github.io/java/2017/05/27/java-gson/ 참고-->
 		<dependency>
