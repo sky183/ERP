@@ -15,7 +15,7 @@
 		<!--자바 버전-->
 		<java-version>1.8</java-version>
 		<!--스프링버전-->
-		<org.springframework-version>4.3.18.RELEASE</org.springframework-version>
+		<org.springframework-version>5.3.18</org.springframework-version>
 		<!--aop를 사용할때 추가한다. 일단은 디펜던시는 주석처리하자. https://araikuma.tistory.com/309 참고-->
 		<org.aspectj-version>1.8.6</org.aspectj-version>
 		<!--로깅 관련 - https://gmlwjd9405.github.io/2019/01/04/logging-with-slf4j.html 참고-->
